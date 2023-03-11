@@ -18,7 +18,8 @@
   <h1 class="heading">Kindly login to proceed!</h1>
   <input type="email" class = "email" id ="email" placeholder="Enter your email address">
   <input type="password" class = "password" id ="password" placeholder="Enter your password">
-  <button class="login_button btn" id="login">Login</button>
+  <div id="error"></div>
+  <button class="login_button btn" id="login_btn">Login</button>
   <p class="register_link">Don't have an account? <a href="./pages/register.html">Register here</a>.</p>
 </div>
 
@@ -26,5 +27,8 @@
 
 <script src="./js/axios.min.js"></script>
 <script src ="./js/scripts.js"></script>
+<script>
+  hospital_pages.loadFor("login");
+</script>
 </body>
 </html>

@@ -27,13 +27,17 @@
     <option value="Patient">Patient</option>
   </select>
 </div>
-  <button class="login_button btn" id="login">Register</button>
+<div id="error"></div>
+  <button class="login_button btn" id="register_btn">Register</button>
   <p class="register_link">Already have an account? <a href="../index.html">Login here</a>.</p>
 </div>
 
 
 
-<script src="./js/axios.min.js"></script>
-<script src ="./js/scripts.js"></script>
+<script src="../js/axios.min.js"></script>
+<script src ="../js/scripts.js"></script>
+<script>
+  hospital_pages.loadFor("register");
+</script>
 </body>
 </html>

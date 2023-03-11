@@ -3,6 +3,7 @@
   --white: #ffffff;
   --green:#1d8553;
   --black: #000000;
+  --red:#ff0000;
 }
 
 a{
@@ -59,13 +60,14 @@ input{
   font-size: 2em;
   padding: 1%;
   border-radius: 10px;
-  border: 2px solid var(--green);
+  border: 2px solid var(--black);
+  opacity: 0.8;
 }
 
 input::placeholder{
   font-size: 20px;
   padding: 1%;
-  opacity:0.6;
+
 }
 
 .btn {
@@ -96,8 +98,9 @@ input::placeholder{
 }
 
 h1.heading {
-    color: var(--green);
-    margin-bottom: 2%;
+    color: var(--black);
+    margin-bottom: 3%;
+    font-size:3em;
 }
 
 .user_types{
@@ -110,3 +113,16 @@ h1.heading {
   font-size:1.5em;
 }
 
+#error {
+  display: flex;
+  align-items: center;
+  gap:1%;
+  color: var(--red);
+  font-size: 1em;
+  font-weight:bold;
+  margin: 2%;
+}
+
+#error img {
+  width: 10%;
+}
