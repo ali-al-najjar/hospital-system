@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Page</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="icon" type="image/x-icon" href="../assets/logo.svg">
+</head>
+<body>
+<navbar class="navigation">
+  <div class = "logo"><img src="../assets/logo.svg">Hospitals Portal</div>
+  <a class="home" href="../index.html">Home</a>
+</navbar>
+<div class="form">
+  <h1 class="heading">Kindly register to proceed!</h1>
+  <input type="text" class = "first_name" id ="first_name" placeholder="Enter your first name">
+  <input type="text" class = "last_name" id ="last_name" placeholder="Enter your last name">
+  <input type="email" class = "email" id ="email" placeholder="Enter your email address">
+  <input type="password" class = "password" id ="password" placeholder="Enter your password">
+  <div class="user_types">
+  <label for="user_types">Choose your type:</label>
+  <select name="user_types" id="user_types">
+    <option value="Admin">Admin</option>
+    <option value="Employee">Employee</option>
+    <option value="Patient">Patient</option>
+  </select>
+</div>
+  <button class="login_button btn" id="login">Register</button>
+  <p class="register_link">Already have an account? <a href="../index.html">Login here</a>.</p>
+</div>
+
+
+
+<script src="./js/axios.min.js"></script>
+<script src ="./js/scripts.js"></script>
+</body>
+</html>

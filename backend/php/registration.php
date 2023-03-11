@@ -14,13 +14,19 @@ $check_email->execute();
 $check_email->store_result();
 $email_exists = $check_email->num_rows();
 
+$query =  $mysqli->prepare('select id from user_types where name=?');
+$query->bind_param('s', $user_type);
+$query->execute();
+$array=$query->get_result();
+$user_type_id= $array->fetch_assoc();
+
 $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
 if ($email_exists > 0) {
     $response['status'] = "failed";
 } else {
     $query =  $mysqli->prepare('insert into users(first_name,last_name,email,password,usertype_id) values(?,?,?,?,?)');
-    $query->bind_param('ssssi', $first_name, $last_name, $email, $hashed_password,$user_type);
+    $query->bind_param('ssssi', $first_name, $last_name, $email, $hashed_password,$user_type_id['id']);
     $query->execute();
     $response['status'] = "success";
 }
