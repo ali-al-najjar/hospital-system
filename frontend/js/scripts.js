@@ -116,15 +116,16 @@ hospital_pages.load_register = () => {
 hospital_pages.load_admin_portal = async () => {
     const users_url = hospital_pages.base_url + "get_users.php";
     const hospitals_url = hospital_pages.base_url + "get_hospitals.php";
-    const assign_patients_url = hospital_pages.base_url + "assign_patients.php";
     const response = await hospital_pages.getAPI(users_url);
     const hospitals = await hospital_pages.getAPI(hospitals_url);
-    // const assign_patients = await hospital_pages.postAPI(hospitals_url,data);
+
+    
     const users_table = document.getElementById("users_table");
     // const assign_btn = document.getElementById("assign_btn");
 
 const hospitalsList = (list) => {
   const select = document.createElement("select");
+  select.setAttribute("id","dropdown")
     for(let i = 0; i < list.length; i++) {
         let option = list[i];
         let element = document.createElement("option");
@@ -137,6 +138,7 @@ const hospitalsList = (list) => {
 
 const hospitalsListEmployee = (list) => {
   const select = document.createElement("select");
+  select.setAttribute("id","dropdown")
   select.setAttribute("multiple",true);
     for(let i = 0; i < list.length; i++) {
         let option = list[i];
@@ -148,8 +150,8 @@ const hospitalsListEmployee = (list) => {
   return select;
 }
 
-      response.data.forEach(user => {
-        if(user.name == 'Patient' || user.name == 'Employee' ){
+  response.data.forEach(user => {
+    if(user.name == 'Patient' || user.name == 'Employee' ){
       const row = document.createElement("row");
       const fname = document.createElement("div");
       const lname = document.createElement("div");
@@ -171,9 +173,12 @@ const hospitalsListEmployee = (list) => {
         else{
           list.innerHTML=`<div class="info">Press CTRL to choose multiple</div>`;
           list.appendChild(hospitalsListEmployee(hospitals.data));
+
         }
+
         const btn = document.createTextNode("Assign");
         assign_btn.classList.add("assign_btn","btn");
+        assign_btn.setAttribute('id','assign_btn')
         assign_btn.appendChild(btn);
         row.appendChild(fname);
         row.appendChild(lname);
@@ -181,17 +186,37 @@ const hospitalsListEmployee = (list) => {
         row.appendChild(list);
         row.appendChild(assign_btn);
         users_table.appendChild(row);
-        assign_btn.addEventListener("click",() =>{
-          console.log("hi");
-        });
-      }
+
         
-      
-      
-      
+        assign_btn.addEventListener("click",async () =>{
+          let index = document.querySelector("#dropdown");
+          const assign_patients_url = hospital_pages.base_url + "assign_users.php";
+          let data = new FormData();
+            data.append('user_id',user.id);
+            data.append('hospital_id',index.selectedIndex+1);
+            const response = await hospital_pages.postAPI(assign_patients_url,data);
+            console.log(response.data)
+        });
+
+      }
+
   })
   
   
 }
 
   
+// function getSelected() {
+//   var selectEl = document.getElementById('hospitals');
+//   var selectedOptions = [];
+
+//   for (var i = 0; i < selectEl.options.length; i++) {
+//     var optionEl = selectEl.options[i];
+
+//     if (optionEl.selected) {
+//       selectedOptions.push(optionEl.value);
+//     }
+//   }
+
+//   alert('hospitals: ' + selectedOptions.join(', '));
+// }
