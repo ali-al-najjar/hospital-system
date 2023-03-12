@@ -55,16 +55,19 @@ hospital_pages.load_login = () => {
     data.append('password', password);
     if (isValidEmail(email) && isValidPassword(password)){
     const response = await hospital_pages.postAPI(login_url,data);
-    // console.log(response.data.usertype);
     if(response.data.usertype == "Admin"){
       window.localStorage.setItem("usertype","Admin");
+      window.localStorage.setItem("user_id",response.data.user_id);
       window.location.href="./pages/admin_portal.html";
     }else if (response.data.usertype =="Employee"){
       window.localStorage.setItem("usertype","Employee");
+      window.localStorage.setItem("user_id",response.data.user_id);
       window.location.href="./pages/employee_portal.html";
     }else{
       window.localStorage.setItem("usertype","Patient");
+      window.localStorage.setItem("user_id",response.data.user_id);
       window.location.href="./pages/patient_portal.html";
+      
     }
 
   }else{
@@ -121,7 +124,6 @@ hospital_pages.load_admin_portal = async () => {
 
     
     const users_table = document.getElementById("users_table");
-    // const assign_btn = document.getElementById("assign_btn");
 
 const hospitalsList = (list) => {
   const select = document.createElement("select");
@@ -200,10 +202,68 @@ const hospitalsListEmployee = (list) => {
 
       }
 
-  })
-  
-  
+  })}
+
+  hospital_pages.load_patient_portal = async () => {
+    const users_url = hospital_pages.base_url + "get_users.php";
+    const response = await hospital_pages.getAPI(users_url);
+    const departments_url = hospital_pages.base_url + "get_departments.php";
+    const assing_departments_url = hospital_pages.base_url + "user_departments.php";
+    const departments = await hospital_pages.getAPI(departments_url);
+    const users_table = document.getElementById("users_table");
+    const heading = document.getElementById("heading");
+
+const departmentsList = (list) => {
+  const select = document.createElement("select");
+  select.setAttribute("id","dropdown_patient")
+    for(let i = 0; i < list.length; i++) {
+        let option = list[i];
+        let element = document.createElement("option");
+        element.text = option.name;
+        element.value = option.id;
+        select.appendChild(element);
 }
+  return select;
+}
+
+let user_id = window.localStorage.getItem("user_id","value");
+let first_name = response.data[user_id].first_name;
+heading.innerHTML= `Welcome ${first_name}!`
+
+let acc = document.getElementsByClassName("accordion");
+let panel = document.getElementById("panel_department");
+let i;
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    let panel = this.nextElementSibling;
+    if (panel.style.display === "flex") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "flex";
+      panel.style.justifyContent="space-between";
+      panel.style.width="90%";
+    }
+  });
+}
+  const submit_btn = document.createElement("div");
+  const btn = document.createTextNode("Submit");
+  submit_btn.classList.add("submit_btn","btn");
+  submit_btn.setAttribute('id','submit_btn_department')
+  submit_btn.appendChild(btn);
+  panel.appendChild(departmentsList(departments.data));
+  panel.appendChild(submit_btn);
+  let index = document.querySelector("#dropdown_patient");
+  const addDepartment = async () =>{
+  let data = new FormData();
+            data.append('user_id',user_id);
+            data.append('department_id',index.selectedIndex+1);
+            const response = await hospital_pages.postAPI(assing_departments_url,data);
+            console.log(response.data)
+}
+submit_btn.addEventListener("click",addDepartment);
+}
+
 
   
 // function getSelected() {

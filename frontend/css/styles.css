@@ -164,3 +164,41 @@ select {
   width: fit-content;
 }
 
+
+.accordion {
+  background-color: var(--blue);
+  color: white;
+  font-size: 1.5em;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  transition: 0.4s;
+}
+
+.active, .accordion:hover {
+  background-color: var(--green);
+}
+
+.panel {
+  padding: 0 18px;
+  display: none;
+  background-color: white;
+  overflow: initial;
+}
+
+select#dropdown_patient {
+  padding: 0;
+  font-size: 1.2em;
+}
+
+.submit_btn{
+  margin-top: 0%;
+  margin-bottom: 0%;}
+
+  .submit_btn:hover {
+    margin-top: 0%;
+    margin-bottom: 0%;
+}

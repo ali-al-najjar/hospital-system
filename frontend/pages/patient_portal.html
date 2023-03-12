@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Portal</title>
+    <title>Patient Portal</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="icon" type="image/x-icon" href="../assets/logo.svg">
   </head>
@@ -14,15 +14,29 @@
   <a class="home" href="../index.html">Log out</a>
 </navbar>
 
-<div class="form users_table" id="users_table">
-  <h1 class="heading">Kindly Assign users to Hospitals below!</h1>
+<div class="form" id="patients_table">
+  <h1 class="heading" id="heading">Kindly choose your room!</h1>
+  <button class="accordion">Choose Your Department</button>
+<div class="panel" id="panel_department">
+</div>
+
+<button class="accordion">Choose Your Room</button>
+<div class="panel">
+  <p></p>
+</div>
+
+<button class="accordion">Choose Your Services</button>
+<div class="panel">
+  <p></p>
+</div>
+
 </div>
 
 
 <script src="../js/axios.min.js"></script>
 <script src ="../js/scripts.js"></script>
 <script>
-  hospital_pages.loadFor("admin_portal");
+  hospital_pages.loadFor("patient_portal");
 </script>
 </body>
 </html>
