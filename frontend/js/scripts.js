@@ -134,8 +134,20 @@ const hospitalsList = (list) => {
 }
   return select;
 }
-  (hospitalsList(hospitals.data));
-    console.log(response.data);
+
+const hospitalsListEmployee = (list) => {
+  const select = document.createElement("select");
+  select.setAttribute("multiple",true);
+    for(let i = 0; i < list.length; i++) {
+        let option = list[i];
+        let element = document.createElement("option");
+        element.text = option.name;
+        element.value = option.id;
+        select.appendChild(element);
+}
+  return select;
+}
+
       response.data.forEach(user => {
         if(user.name == 'Patient' || user.name == 'Employee' ){
       const row = document.createElement("row");
@@ -154,7 +166,12 @@ const hospitalsList = (list) => {
         const email = document.createTextNode(user.email);
         email_div.appendChild(email);
         list.classList.add("select");
-        list.appendChild(hospitalsList(hospitals.data));
+        if(user.name == "Patient"){
+        list.appendChild(hospitalsList(hospitals.data));}
+        else{
+          list.innerHTML=`<div class="info">Press CTRL to choose multiple</div>`;
+          list.appendChild(hospitalsListEmployee(hospitals.data));
+        }
         const btn = document.createTextNode("Assign");
         assign_btn.classList.add("assign_btn","btn");
         assign_btn.appendChild(btn);
