@@ -55,7 +55,18 @@ hospital_pages.load_login = () => {
     data.append('password', password);
     if (isValidEmail(email) && isValidPassword(password)){
     const response = await hospital_pages.postAPI(login_url,data);
-    console.log(response.data);
+    // console.log(response.data.usertype);
+    if(response.data.usertype == "Admin"){
+      window.localStorage.setItem("usertype","Admin");
+      window.location.href="./pages/admin_portal.html";
+    }else if (response.data.usertype =="Employee"){
+      window.localStorage.setItem("usertype","Employee");
+      window.location.href="./pages/employee_portal.html";
+    }else{
+      window.localStorage.setItem("usertype","Patient");
+      window.location.href="./pages/patient_portal.html";
+    }
+
   }else{
     error.innerHTML="<img src=./assets/error.svg>  Wrong Email OR Password!"
   }}
@@ -102,18 +113,68 @@ hospital_pages.load_register = () => {
 
 
 
-// hospital_pages.load_login = async () => {
-//   const login = hospital_pages.base_url + "login.php";
-//   const response = await hospital_pages.postAPI(login);
-//   console.log(response.data);
-// }
+hospital_pages.load_admin_portal = async () => {
+    const users_url = hospital_pages.base_url + "get_users.php";
+    const hospitals_url = hospital_pages.base_url + "get_hospitals.php";
+    const assign_patients_url = hospital_pages.base_url + "assign_patients.php";
+    const response = await hospital_pages.getAPI(users_url);
+    const hospitals = await hospital_pages.getAPI(hospitals_url);
+    // const assign_patients = await hospital_pages.postAPI(hospitals_url,data);
+    const users_table = document.getElementById("users_table");
+    // const assign_btn = document.getElementById("assign_btn");
 
-// class User{
-//   constructor(first_name,last_name,email,password,usertype){
-//     this.first_name = first_name;
-//     this.last_name = last_name;
-//     this.email = email;
-//     this.password = password;
-//     this.usertype = usertype;
-//   }
-// }
+const hospitalsList = (list) => {
+  const select = document.createElement("select");
+    for(let i = 0; i < list.length; i++) {
+        let option = list[i];
+        let element = document.createElement("option");
+        element.text = option.name;
+        element.value = option.id;
+        select.appendChild(element);
+}
+  return select;
+}
+  (hospitalsList(hospitals.data));
+    console.log(response.data);
+      response.data.forEach(user => {
+        if(user.name == 'Patient' || user.name == 'Employee' ){
+      const row = document.createElement("row");
+      const fname = document.createElement("div");
+      const lname = document.createElement("div");
+      const email_div = document.createElement("div");
+      const assign_btn = document.createElement("div");
+      const list = document.createElement("div");
+        row.classList.add("row");
+        const first_name = document.createTextNode(user.first_name);
+        fname.classList.add("first_name");
+        fname.appendChild(first_name);
+        const last_name = document.createTextNode(user.last_name);
+        lname.classList.add("last_name");
+        lname.appendChild(last_name);
+        const email = document.createTextNode(user.email);
+        email_div.appendChild(email);
+        list.classList.add("select");
+        list.appendChild(hospitalsList(hospitals.data));
+        const btn = document.createTextNode("Assign");
+        assign_btn.classList.add("assign_btn","btn");
+        assign_btn.appendChild(btn);
+        row.appendChild(fname);
+        row.appendChild(lname);
+        row.appendChild(email_div);
+        row.appendChild(list);
+        row.appendChild(assign_btn);
+        users_table.appendChild(row);
+        assign_btn.addEventListener("click",() =>{
+          console.log("hi");
+        });
+      }
+        
+      
+      
+      
+  })
+  
+  
+}
+
+  
