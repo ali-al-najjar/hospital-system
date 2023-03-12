@@ -4,6 +4,7 @@
   --green:#1d8553;
   --black: #000000;
   --red:#ff0000;
+  --lightgray:lightgray;
 }
 
 a{
@@ -183,9 +184,9 @@ select {
 }
 
 .panel {
-  padding: 0 18px;
+  padding: 2%;
   display: none;
-  background-color: white;
+  background-color: var(--lightgray);
   overflow: initial;
 }
 
